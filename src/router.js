@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 
+import Sirenas from './views/Sirenas.vue'
+import Admin from './views/Admin.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -9,7 +12,17 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Sirenas
+    },
+    {
+      path: '/sirenas',
+      name: 'sirenas',
+      component: Sirenas
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: Admin
     },
     {
       path: '/about',

@@ -17,9 +17,9 @@ Vue.use(VueAxios, axios)
 
 // Fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCircle, faPlay, faStop, faMapPin, faMapMarked, faSearch, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faPlay, faStop, faMapPin, faMapMarked, faSearch, faExclamationTriangle, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faCircle, faPlay, faStop, faMapPin, faMapMarked, faSearch, faExclamationTriangle)
+library.add(faCircle, faPlay, faStop, faMapPin, faMapMarked, faSearch, faExclamationTriangle, faPlus, faTimes, faTrash)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 import VueLayers from 'vuelayers'

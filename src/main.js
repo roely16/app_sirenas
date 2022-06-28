@@ -22,9 +22,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faCircle, faPlay, faStop, faMapPin, faMapMarked, faSearch, faExclamationTriangle, faPlus, faTimes, faTrash)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-import VueLayers from 'vuelayers'
-import 'vuelayers/lib/style.css' // needs css-loader
-Vue.use(VueLayers)
+// import VueLayers from 'vuelayers'
+// import 'vuelayers/lib/style.css' // needs css-loader
+// Vue.use(VueLayers)
 
 Vue.config.productionTip = false
 

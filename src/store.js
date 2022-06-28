@@ -1,10 +1,11 @@
-/* eslint-disable no-console */
 import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
 import axios from 'axios'
+
+import corredor from './store/corredor'
 
 export default new Vuex.Store({
 	state: {
@@ -103,5 +104,8 @@ export default new Vuex.Store({
 		getCorredores: state => state.corredores,
 		getCorredoresSeleccionados: state => state.corredores_seleccionados
 
+	},
+	modules: {
+		corredor: corredor
 	}
 })

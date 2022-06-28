@@ -117,17 +117,12 @@
 
                 const url = 'http://' + this.ip + ':' + this.puerto + '/?status=Encender'
 
-                // eslint-disable-next-line no-console
-                console.log(url)
-
-
                 var formData = new FormData();
                 formData.append("submit", "Encender");
 
                 fetch(url, {
                     method: 'GET',
                     mode: 'no-cors',
-                    // body: formData
                 })
                 .then(function(response) {
                     return response;

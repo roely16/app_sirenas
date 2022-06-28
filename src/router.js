@@ -12,7 +12,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Sirenas
+      component: Home
     },
     {
       path: '/sirenas',

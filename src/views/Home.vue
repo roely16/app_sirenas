@@ -10,7 +10,7 @@
 				<acciones-corredor></acciones-corredor>
 			</b-col>
 			<b-col cols="12" md="4" lg="4" sm="6">
-				<b-form-group description="Búsqueda realizada en base a al dirección">
+				<b-form-group description="Búsqueda realizada en base a la dirección">
 					<b-input-group >
 						<template #append>
 								<b-input-group-text>

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import axios from 'axios'
 
 import corredor from './store/corredor'
+import home from './store/home'
 
 export default new Vuex.Store({
 	state: {
@@ -106,6 +107,7 @@ export default new Vuex.Store({
 
 	},
 	modules: {
-		corredor: corredor
+		corredor: corredor,
+		home: home
 	}
 })

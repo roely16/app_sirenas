@@ -18,6 +18,6 @@ export default {
     },
     components: {
         'card-sirena': CardSirena
-    }    
+    }
 }
 </script>

@@ -21,7 +21,7 @@
                 </b-col>
             </b-row>
 
-            <div v-if="data.expand" class="mt-4">
+            <div v-show="data.expand" class="mt-4">
                 <b-row>
                     <b-col cols="12">
                         <acciones-corredor></acciones-corredor>

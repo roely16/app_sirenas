@@ -22,7 +22,7 @@
            </b-col>
         </b-row>
 
-        <b-row v-if="data.expand" class="mt-4">
+        <b-row v-show="data.expand" class="mt-4">
             <b-col>
                 <acciones></acciones>
             </b-col>

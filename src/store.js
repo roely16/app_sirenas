@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import corredor from './store/corredor'
 import home from './store/home'
+import actions from './store/actions'
 
 export default new Vuex.Store({
 	state: {
@@ -108,6 +109,7 @@ export default new Vuex.Store({
 	},
 	modules: {
 		corredor: corredor,
-		home: home
+		home: home,
+		actions: actions
 	}
 })

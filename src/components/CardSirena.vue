@@ -24,7 +24,7 @@
 
         <b-row v-show="data.expand" class="mt-4">
             <b-col>
-                <acciones></acciones>
+                <acciones :disabled="!data.enable" :sirens="data.enable ? [data] : []"></acciones>
             </b-col>
         </b-row>
     </b-card>

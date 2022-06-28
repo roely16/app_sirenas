@@ -7,7 +7,7 @@
 		</b-row>
 		<b-row align-v="center">
 			<b-col class="mb-4">
-				<acciones-corredor></acciones-corredor>
+				<acciones-corredor :disabled="disabledActions" :sirens="getEnableSirens"></acciones-corredor>
 			</b-col>
 			<b-col cols="12" md="4" lg="4" sm="6">
 				<b-form-group description="Búsqueda realizada en base a la dirección">
@@ -36,7 +36,7 @@
 import ListaCorredores from '@/components/ListaCorredores'
 import AccionesCorredor from '@/components/AccionesCorredor'
 
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters, mapState } from 'vuex'
 
 export default {
 	name: 'home',
@@ -57,6 +57,25 @@ export default {
 			set(val){
 				this.setSearch(val)
 			}
+		},
+		...mapGetters({
+			'getEnableSirens': 'corredor/getEnableSirens'
+		}),
+		...mapState({
+			'corredores': state => state.corredor.corredores
+		}),
+		disabledActions(){
+
+			let result = this.corredores.filter(corredor => corredor.enable)
+
+			if (result.length > 0) {
+				
+				return false
+
+			}
+
+			return true
+
 		}
 	}
 }

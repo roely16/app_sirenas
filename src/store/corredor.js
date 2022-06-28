@@ -165,9 +165,33 @@ const actions = {
 
 }
 
+const getters = {
+
+    getEnableSirens(){
+
+        let sirenas = []
+
+        state.corredores.forEach(corredor => {
+            
+            // Buscar aquellas sirenas que están activas y que se pueden activar con fetch
+            let result = corredor.sirenas.filter(sirena => sirena.enable) 
+
+            result.forEach(element => {
+                sirenas.push(element)
+            });
+
+        });
+
+        return sirenas
+
+    }
+
+}
+
 export default {
     namespaced,
     state,
     mutations,
-    actions
+    actions,
+    getters
 }

@@ -24,7 +24,7 @@
             <div v-show="data.expand" class="mt-4">
                 <b-row>
                     <b-col cols="12">
-                        <acciones-corredor></acciones-corredor>
+                        <acciones-corredor :disabled="!data.enable" :sirens="enableSirens"></acciones-corredor>
                     </b-col>
                 </b-row>
                 <hr>
@@ -68,6 +68,15 @@ export default {
         }),
         mostrarDetalle(){
             this.data.expand = !this.data.expand
+        }
+    },
+    computed: {
+        enableSirens(){
+            
+            let result = this.data.sirenas.filter(sirena => sirena.enable)
+
+            return result
+
         }
     }
 }

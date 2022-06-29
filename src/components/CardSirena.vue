@@ -13,6 +13,7 @@
                     <span class="badge badge-light pl-0">
                         <font-awesome-icon size="xs" :color="data.estado.color" icon="circle" />
                         {{ data.estado.text }}
+                        <b-spinner class="ml-2" variant="primary" v-if="data.sending" small label="Spinning"></b-spinner>
                     </span>
                 </b-card-text>
            </b-col>
@@ -22,10 +23,11 @@
            </b-col>
         </b-row>
 
-        <b-row v-show="data.expand" class="mt-4">
-            <b-col>
+        <b-row align-v="center" v-show="data.expand" class="mt-4">
+            <b-col cols="12">
                 <acciones :disabled="!data.enable" :sirens="data.enable ? [data] : []"></acciones>
             </b-col>
+            
         </b-row>
     </b-card>
 </template>
@@ -34,7 +36,7 @@
 
 import Acciones from '@/components/AccionesCorredor'
 
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
     props: {
@@ -48,9 +50,29 @@ export default {
             'checkConnection': 'corredor/checkConnection',
             'estadoSirena': 'corredor/estadoSirena'
         }),
+        ...mapMutations({
+            'setSirensProcess': 'actions/setSirensProcess'
+        }),
         mostrarDetalle(){
 
             this.data.expand = !this.data.expand
+
+        }
+    },
+    watch: {
+        'data.sending'(value){
+
+            if (value) {
+                
+                setTimeout(() => { 
+                    this.setSirensProcess(this.data) 
+                    this.data.sending = false
+
+                }, 2000)
+                
+            }
+
+            
 
         }
     }

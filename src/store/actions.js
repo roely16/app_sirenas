@@ -1,16 +1,63 @@
+import Swal from 'sweetalert2'
+
 const namespaced = true
 
-const state = {}
+const state = {
+    sending: false,
+    sirens_process: [],
+    action_name: null
+}
 
-const mutations = {}
+const mutations = {
+    setSending: (state, payload) => {
+        state.sending = payload
+    },
+    setSirensProcess: (state, payload) => {
+        state.sirens_process.push(payload)
+    },
+    clearSirensProcess: (state) => {
+        state.sirens_process = []
+    },
+    setActionName: (state, payload) => {
+        state.action_name = payload
+    }
+}
 
 const actions = {
 
-    goAction(state, payload){
+    goAction({commit}, payload){
 
-        console.log(payload)
+        commit('clearSirensProcess')
 
-        //payload.loading[payload.key_loading] = !payload.loading[payload.key_loading]
+        // Preguntar al usuario si esta seguro 
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "Se activarán las sirenas seleccionadas!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#808080',
+            confirmButtonText: 'ACTIVAR!',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+          }).then((result) => {
+
+            if (result.isConfirmed) {
+                
+                commit('setActionName', payload.key_loading)
+                payload.loading[payload.key_loading] = !payload.loading[payload.key_loading]
+
+                commit('setSending', payload.loading[payload.key_loading])
+
+                payload.sirens.forEach(siren => {
+            
+                    siren.sending = true
+        
+                });
+
+            }
+
+          })        
         
     }
 

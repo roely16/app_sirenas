@@ -9,11 +9,18 @@
                     {{ data.DIRECCION }}
                 </small>
 
-                <b-card-text>
+                <b-card-text  v-if="!data.testing">
                     <span class="badge badge-light pl-0">
                         <font-awesome-icon size="xs" :color="data.estado.color" icon="circle" />
                         {{ data.estado.text }}
                         <b-spinner class="ml-2" variant="primary" v-if="data.sending" small label="Spinning"></b-spinner>
+                    </span>
+                </b-card-text>
+
+                <b-card-text v-else>
+                    <span class="badge badge-light pl-0">
+                        Probando conexión...
+                        <b-spinner class="ml-2" variant="primary" type="grow" small label="Spinning"></b-spinner>
                     </span>
                 </b-card-text>
            </b-col>
@@ -36,7 +43,7 @@
 
 import Acciones from '@/components/AccionesCorredor'
 
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 
 export default {
     props: {
@@ -59,22 +66,72 @@ export default {
 
         }
     },
+    computed: {
+        ...mapState({
+            action_name: state => state.actions.action_name
+        })
+    },
     watch: {
         'data.sending'(value){
 
             if (value) {
                 
-                setTimeout(() => { 
+                let self = this
+
+                // Obtener la información de conexión en base a la acción ejecutada
+                let action = this.data.acciones[this.action_name]
+
+                var details = action.body
+                var url = action.url
+
+                var formBody = [];
+
+                for (var property in details) {
+                    var encodedKey = encodeURIComponent(property);
+                    var encodedValue = encodeURIComponent(details[property]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
+                
+                formBody = formBody.join("&");
+
+                fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formBody,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    }
+                })
+                .then(function(response) {
+                    return response;
+                })
+                .then(function(myJson) {
+                    // eslint-disable-next-line no-console
+                    console.log(myJson);
+                    self.setSirensProcess(this.data) 
+                    self.data.sending = false
+                    
+                })
+                .catch(function(error){
+                    // eslint-disable-next-line no-console
+                    console.log(error)
                     this.setSirensProcess(this.data) 
                     this.data.sending = false
-
-                }, 2000)
+                    
+                });
                 
-            }
-
-            
+            }            
 
         }
+    },
+    mounted(){
+
+        if (this.data) {
+            
+            this.checkConnection(this.data)
+
+        }
+
     }
 }
 </script>

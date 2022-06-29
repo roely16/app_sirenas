@@ -141,25 +141,30 @@ const actions = {
         }
 
     },
-    checkConnection(state, payload){
+    async checkConnection(state, payload){
 
-        const url = 'http://' + payload.IP
+        try {
+            
+            payload.testing = true
 
-        fetch(url, {
-            method: 'GET',
-            mode: 'no-cors'
-        })
-        .then(function(response) {
-            return response;
-        })
-        .then(function(myJson) {
-            // eslint-disable-next-line no-console
-            console.log(myJson);
-        })
-        .catch(function(error){
-            // eslint-disable-next-line no-console
+            const data = {
+                name: 'check_connection',
+                param: {
+                    ip: payload.IP
+                }
+            }
+
+            const response = await axios.post(process.env.VUE_APP_API_URL, data)
+
+            payload.testing = false
+            
+            payload.estado = response.data.response.result.estado
+
+        } catch (error) {
+            
             console.log(error)
-        });
+
+        }
 
     }
 

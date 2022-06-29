@@ -5,15 +5,23 @@
                     <b-card-text>
                         {{ data.NOMBRE }}
                     </b-card-text>
-                    <b-card-text>
+                    
+                    <b-card-text v-if="!estado.testing">
                         <span class="badge badge-light pl-0">
-                            <font-awesome-icon size="xs" :color="data.estado.color" icon="circle" />
-                            {{ data.estado.text }}
+                            <font-awesome-icon size="xs" :color="estado.color" icon="circle" />
+                            {{ estado.text }}
                         </span>
-                        <span class="badge badge-success ml-2">
-                            {{ data.estado.result }}
+                        <span :class="'badge badge-' + estado.variant + ' ml-2'">
+                            {{ estado.result }}
                         </span>
                     </b-card-text>
+                    <b-card-text v-else>
+                        <span class="badge badge-light pl-0">
+                            Probando conexión...
+                            <b-spinner class="ml-2" variant="primary" type="grow" small label="Spinning"></b-spinner>
+                        </span>
+                    </b-card-text>
+
                 </b-col>
                 <b-col cols="2">
                     <b-spinner v-if="data.loading" type="grow" small label="Spinning"></b-spinner>
@@ -76,6 +84,57 @@ export default {
             let result = this.data.sirenas.filter(sirena => sirena.enable)
 
             return result
+
+        },
+        estado(){
+
+            // Obtener el estado de cada una de las sirenas (testing)
+            
+            let testing = this.data.sirenas.filter(sirena => sirena.testing)
+
+            if (testing.length > 0) {
+                
+                return {
+                    'testing': true
+                }
+
+            }
+
+            // Determinar cuantas sirenas tienen conexión
+            let sin_conexion = this.data.sirenas.filter(sirena => sirena.estado.loss > 0)
+
+            // Si todas tienen conexión
+            if (sin_conexion.length > 0 && sin_conexion.length == this.data.sirenas.length) {
+                
+                return {
+                    'color': 'red',
+                    'variant': 'danger',
+                    'text': 'Sin Conexión',
+                    'result': sin_conexion.length + '/' + this.data.sirenas.length,
+                    'testing': false
+                }
+
+            }
+            
+            if(sin_conexion.length > 0 && sin_conexion.length < this.data.sirenas.length){
+
+                return {
+                    'color': 'orange',
+                    'variant': 'warning',
+                    'text': 'Requiere Atención',
+                    'result': sin_conexion.length + '/' + this.data.sirenas.length,
+                    'testing': false
+                }
+
+            }
+
+            return {
+                'color': 'green',
+                'variant': 'success',
+                'text': 'En Línea',
+                'result': this.data.sirenas.length + '/' + this.data.sirenas.length,
+                'testing': false
+            }
 
         }
     }

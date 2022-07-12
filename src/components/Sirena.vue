@@ -152,7 +152,6 @@
 
                 // eslint-disable-next-line no-console
                 console.log(url)
-
                 let self = this
 
                 fetch(url, {

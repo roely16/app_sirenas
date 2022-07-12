@@ -94,31 +94,41 @@ export default {
                 
                 formBody = formBody.join("&");
 
-                fetch(url, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: formBody,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                    }
-                })
-                .then(function(response) {
-                    return response;
-                })
-                .then(function(myJson) {
-                    // eslint-disable-next-line no-console
-                    console.log(myJson);
+                try {
+                    
+                    fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formBody,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                        }
+                    })
+                    .then(function(response) {
+                        return response;
+                    })
+                    .then(function(myJson) {
+                        // eslint-disable-next-line no-console
+                        console.log(myJson);
+                        self.setSirensProcess(this.data) 
+                        self.data.sending = false
+                        
+                    })
+                    .catch(function(error){
+                        // eslint-disable-next-line no-console
+                        console.log(error)
+                        this.setSirensProcess(this.data) 
+                        this.data.sending = false
+                        
+                    });
+
+                } catch (error) {
+                    
                     self.setSirensProcess(this.data) 
                     self.data.sending = false
-                    
-                })
-                .catch(function(error){
-                    // eslint-disable-next-line no-console
-                    console.log(error)
-                    this.setSirensProcess(this.data) 
-                    this.data.sending = false
-                    
-                });
+
+                }
+                
                 
             }            
 

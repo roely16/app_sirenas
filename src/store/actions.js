@@ -32,12 +32,12 @@ const actions = {
         // Preguntar al usuario si esta seguro 
         Swal.fire({
             title: '¿Está seguro?',
-            text: "Se activarán las sirenas seleccionadas!",
+            text: "Se ejecutará la acción en las sirenas seleccionadas!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#808080',
-            confirmButtonText: 'ACTIVAR!',
+            confirmButtonText: 'EJECUTAR!',
             cancelButtonText: 'Cancelar',
             reverseButtons: true
           }).then((result) => {

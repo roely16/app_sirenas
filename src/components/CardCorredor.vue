@@ -101,16 +101,16 @@ export default {
             }
 
             // Determinar cuantas sirenas tienen conexión
-            let sin_conexion = this.data.sirenas.filter(sirena => sirena.estado.loss > 0)
+            let sin_conexion = this.data.sirenas.filter(sirena => sirena.estado.loss == 0)
 
-            // Si todas tienen conexión
+            // Si todas no tienen conexión
             if (sin_conexion.length > 0 && sin_conexion.length == this.data.sirenas.length) {
                 
                 return {
-                    'color': 'red',
-                    'variant': 'danger',
-                    'text': 'Sin Conexión',
-                    'result': sin_conexion.length + '/' + this.data.sirenas.length,
+                    'color': 'green',
+                    'variant': 'success',
+                    'text': 'En Línea',
+                    'result': this.data.sirenas.length + '/' + this.data.sirenas.length,
                     'testing': false
                 }
 
@@ -129,10 +129,10 @@ export default {
             }
 
             return {
-                'color': 'green',
-                'variant': 'success',
-                'text': 'En Línea',
-                'result': this.data.sirenas.length + '/' + this.data.sirenas.length,
+                'color': 'red',
+                'variant': 'error',
+                'text': 'Sin Conexión',
+                'result': sin_conexion.length + '/' + this.data.sirenas.length,
                 'testing': false
             }
 

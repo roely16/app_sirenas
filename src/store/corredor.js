@@ -147,22 +147,38 @@ const actions = {
             
             payload.testing = true
 
-            const data = {
-                name: 'check_connection',
-                param: {
-                    ip: payload.IP
-                }
-            }
+            const { timeout = 8000 } = {timeout: 6000};
 
-            const response = await axios.post(process.env.VUE_APP_API_URL, data)
+            const url = 'http://' + payload.IP + ':8888'
+
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+
+            await fetch(url, {
+                method: 'GET',
+                mode: 'no-cors',
+                timeout: 1000,
+                signal: controller.signal
+            })
+
+            clearTimeout(id)
 
             payload.testing = false
             
-            payload.estado = response.data.response.result.estado
+            payload.estado = {
+                'color': 'green',
+                'text': 'En Línea',
+                'loss': 0,
+            }
 
         } catch (error) {
             
-            console.log(error)
+            payload.estado = {
+                'color': 'red',
+                'text': 'Sin conexión',
+                'loss': 100
+            }
+            payload.testing = false
 
         }
 

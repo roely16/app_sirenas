@@ -1,10 +1,10 @@
 <template>
     <div>
-        <b-button @click="setAction('encender')" class="mr-2" variant="danger" :disabled="(loading.encender && !all_finish) || true">
+        <b-button @click="setAction('encender')" class="mr-2" variant="danger" :disabled="(loading.encender && !all_finish)">
             <b-spinner v-if="(loading.encender && !all_finish)" small></b-spinner>
             <font-awesome-icon v-else icon="play" />
         </b-button>
-        <b-button @click="setAction('intermitente')" class="mr-2" variant="warning" :disabled="(loading.intermitente && !all_finish) || true">
+        <b-button @click="setAction('intermitente')" class="mr-2" variant="warning" :disabled="(loading.intermitente && !all_finish)">
             <b-spinner v-if="(loading.intermitente && !all_finish)" small></b-spinner>
             <font-awesome-icon v-else icon="exclamation-triangle" />
         </b-button>

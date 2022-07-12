@@ -94,41 +94,47 @@ export default {
                 
                 formBody = formBody.join("&");
 
+                const { timeout = 8000 } = {timeout: 6000};
+
+                const controller = new AbortController();
+                const id = setTimeout(() => controller.abort(), timeout);
+
                 try {
-                    
+
                     fetch(url, {
                         method: 'POST',
                         mode: 'no-cors',
                         body: formBody,
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                        }
+                        },
+                        timeout: 1000,
+                        signal: controller.signal
                     })
                     .then(function(response) {
                         return response;
                     })
-                    .then(function(myJson) {
+                    .then(function() {
                         // eslint-disable-next-line no-console
-                        console.log(myJson);
-                        self.setSirensProcess(this.data) 
+                        self.setSirensProcess(self.data) 
                         self.data.sending = false
                         
                     })
-                    .catch(function(error){
+                    .catch(function(){
                         // eslint-disable-next-line no-console
-                        console.log(error)
-                        this.setSirensProcess(this.data) 
-                        this.data.sending = false
+                        self.setSirensProcess(self.data) 
+                        self.data.sending = false
                         
                     });
 
+                    clearTimeout(id)
+
                 } catch (error) {
                     
-                    self.setSirensProcess(this.data) 
+                    // self.setSirensProcess(this.data) 
                     self.data.sending = false
 
                 }
-                
                 
             }            
 
